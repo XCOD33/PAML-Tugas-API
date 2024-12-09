@@ -1,3 +1,4 @@
+import 'package:paml_tugas_api/app/http/controllers/vendor_controller.dart';
 import 'package:vania/vania.dart';
 import 'package:paml_tugas_api/app/http/controllers/home_controller.dart';
 import 'package:paml_tugas_api/app/http/middleware/authenticate.dart';
@@ -25,5 +26,13 @@ class ApiRoute implements Route {
     Router.get("/user", () {
       return Response.json(Auth().user());
     }).middleware([AuthenticateMiddleware()]);
+
+    Router.group(() {
+      Router.get('/', vendorController.index);
+      Router.post('/', vendorController.store);
+      Router.get('/{id}', vendorController.show);
+      Router.put('/{id}', vendorController.update);
+      Router.delete('/{id}', vendorController.destroy);
+    }, prefix: '/vendors');
   }
 }
