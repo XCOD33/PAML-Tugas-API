@@ -1,0 +1,16 @@
+services:
+  db:
+    container_name: vania-db
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: vania
+      MYSQL_USER: vania
+      MYSQL_PASSWORD: vania
+      MYSQL_ROOT_PASSWORD: vania
+    ports:
+      - '3306:3306'
+    volumes:
+      - vania-db-data:/var/lib/postgresql/data
+
+volumes:
+  vania-db-data:
