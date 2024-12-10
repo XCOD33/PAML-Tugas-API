@@ -1,3 +1,4 @@
+import 'package:paml_tugas_api/app/http/controllers/customer_controller.dart';
 import 'package:paml_tugas_api/app/http/controllers/vendor_controller.dart';
 import 'package:vania/vania.dart';
 import 'package:paml_tugas_api/app/http/controllers/home_controller.dart';
@@ -34,5 +35,13 @@ class ApiRoute implements Route {
       Router.put('/{id}', vendorController.update);
       Router.delete('/{id}', vendorController.destroy);
     }, prefix: '/vendors');
+
+    Router.group(() {
+      Router.get('/', customerController.index);
+      Router.post('/', customerController.store);
+      Router.get('/{id}', customerController.show);
+      Router.put('/{id}', customerController.update);
+      Router.delete('/{id}', customerController.destroy);
+    }, prefix: '/customers');
   }
 }
