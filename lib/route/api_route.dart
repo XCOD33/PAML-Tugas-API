@@ -1,4 +1,5 @@
 import 'package:paml_tugas_api/app/http/controllers/customer_controller.dart';
+import 'package:paml_tugas_api/app/http/controllers/order_controller.dart';
 import 'package:paml_tugas_api/app/http/controllers/product_controller.dart';
 import 'package:paml_tugas_api/app/http/controllers/product_note_controller.dart';
 import 'package:paml_tugas_api/app/http/controllers/vendor_controller.dart';
@@ -61,5 +62,12 @@ class ApiRoute implements Route {
       Router.put('/{id}', productNoteController.update);
       Router.delete('/{id}', productNoteController.destroy);
     }, prefix: '/product-notes');
+
+    Router.group(() {
+      Router.get('/', orderController.index);
+      Router.post('/', orderController.store);
+      Router.get('/{id}', orderController.show);
+      Router.delete('/{id}', orderController.destroy);
+    }, prefix: '/orders');
   }
 }
