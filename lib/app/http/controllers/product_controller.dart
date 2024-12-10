@@ -5,12 +5,42 @@ import 'package:vania/vania.dart';
 class ProductController extends Controller {
   Future<Response> index() async {
     try {
-      var products = await Product().query().get();
+      var results = await Product()
+          .query()
+          .join('productnotes', 'products.prod_id', '=', 'productnotes.prod_id')
+          .get();
+
+      Map<String, dynamic> productMap = {};
+
+      for (var row in results) {
+        String prodId = row['prod_id'];
+
+        if (!productMap.containsKey(prodId)) {
+          productMap[prodId] = {
+            'prod_id': row['prod_id'],
+            'vend_id': row['vend_id'],
+            'prod_name': row['prod_name'],
+            'prod_price': row['prod_price'],
+            'prod_desc': row['prod_desc'],
+            'created_at': row['created_at'],
+            'updated_at': row['updated_at'],
+            'product_notes': []
+          };
+        }
+
+        productMap[prodId]['product_notes'].add({
+          'note_id': row['note_id'],
+          'note_date': row['note_date'],
+          'note_text': row['note_text'],
+          'created_at': row['created_at'],
+          'updated_at': row['updated_at'],
+        });
+      }
 
       return Response.json({
         'success': true,
         'message': 'Products found',
-        'data': products,
+        'data': productMap.values.toList(),
       });
     } catch (e) {
       return Response.json({
