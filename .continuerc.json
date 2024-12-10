@@ -5,5 +5,25 @@
       "startUrl": "https://vdart.dev/docs/Getting%20Started",
       "rootUrl": "https://vdart.dev/docs/category/the-basics"
     }
+  ],
+  "contextProviders": [
+    {
+      "name": "database",
+      "params": {
+        "connections": [
+          {
+            "name": "DB - Vania Dart",
+            "connection_type": "mysql",
+            "connection": {
+              "user": "vania",
+              "host": "localhost",
+              "database": "vania",
+              "password": "vania",
+              "port": 3306
+            }
+          }
+        ]
+      }
+    }
   ]
 }

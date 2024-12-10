@@ -4,12 +4,64 @@ import 'package:vania/vania.dart';
 class CustomerController extends Controller {
   Future<Response> index() async {
     try {
-      var customers = await Customer().query().get();
+      var results = await Customer()
+          .query()
+          .join('orders', 'customers.cust_id', '=', 'orders.cust_id')
+          .join('orderitems', 'orders.order_num', '=', 'orderitems.order_num')
+          .get();
+
+      Map<String, dynamic> customerMap = {};
+
+      for (var row in results) {
+        String custId = row['cust_id'];
+
+        if (!customerMap.containsKey(custId)) {
+          customerMap[custId] = {
+            'cust_id': row['cust_id'],
+            'cust_name': row['cust_name'],
+            'cust_address': row['cust_address'],
+            'cust_city': row['cust_city'],
+            'cust_zip': row['cust_zip'],
+            'cust_country': row['cust_country'],
+            'cust_telp': row['cust_telp'],
+            'created_at': row['created_at'],
+            'updated_at': row['updated_at'],
+            'orders': []
+          };
+        }
+
+        // Cek apakah order sudah ada dalam array orders
+        String orderNum = row['order_num'].toString();
+        var existingOrder = customerMap[custId]['orders'].firstWhere(
+            (order) => order['order_num'].toString() == orderNum,
+            orElse: () => null);
+
+        if (existingOrder == null) {
+          existingOrder = {
+            'order_num': row['order_num'],
+            'order_date': row['order_date'],
+            'created_at': row['created_at'],
+            'updated_at': row['updated_at'],
+            'order_items': []
+          };
+          customerMap[custId]['orders'].add(existingOrder);
+        }
+
+        // Tambahkan order item ke order yang sesuai
+        existingOrder['order_items'].add({
+          'order_item': row['order_item'],
+          'prod_id': row['prod_id'],
+          'quantity': row['quantity'],
+          'size': row['size'],
+          'created_at': row['created_at'],
+          'updated_at': row['updated_at'],
+        });
+      }
 
       return Response.json({
         'success': true,
         'message': 'Customers found',
-        'data': customers,
+        'data': customerMap.values.toList(),
       });
     } catch (e) {
       return Response.json({
