@@ -1,11 +1,12 @@
+import 'package:paml_tugas_api/app/http/controllers/auth_controller.dart';
 import 'package:paml_tugas_api/app/http/controllers/customer_controller.dart';
 import 'package:paml_tugas_api/app/http/controllers/order_controller.dart';
 import 'package:paml_tugas_api/app/http/controllers/product_controller.dart';
 import 'package:paml_tugas_api/app/http/controllers/product_note_controller.dart';
+import 'package:paml_tugas_api/app/http/controllers/user_controller.dart';
 import 'package:paml_tugas_api/app/http/controllers/vendor_controller.dart';
 import 'package:vania/vania.dart';
 import 'package:paml_tugas_api/app/http/controllers/home_controller.dart';
-import 'package:paml_tugas_api/app/http/middleware/authenticate.dart';
 import 'package:paml_tugas_api/app/http/middleware/home_middleware.dart';
 import 'package:paml_tugas_api/app/http/middleware/error_response_middleware.dart';
 
@@ -26,10 +27,11 @@ class ApiRoute implements Route {
             () => Response.json({'message': 'Hi wrong request'}))
         .middleware([ErrorResponseMiddleware()]);
 
-    // Return Authenticated user data
-    Router.get("/user", () {
-      return Response.json(Auth().user());
-    }).middleware([AuthenticateMiddleware()]);
+    Router.group(() {
+      Router.post('/', userController.store);
+      Router.post('/login', authController.login);
+      Router.post('/logout', authController.logout);
+    }, prefix: '/users');
 
     Router.group(() {
       Router.get('/', vendorController.index);
