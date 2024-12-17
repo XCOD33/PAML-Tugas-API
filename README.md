@@ -9,6 +9,8 @@
   <p>
     <img src="https://img.shields.io/badge/Status-Done-green" alt="status">
     <img src="https://img.shields.io/badge/Version-1.0.0-blue" alt="version">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2FXCOD33%2FPAML-Tugas-API.json%3Fshow%3Dunique&style=flat&color=%2366fa8e" alt="version">
+
   </p>
 </div>
 
