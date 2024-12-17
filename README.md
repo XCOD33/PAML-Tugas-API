@@ -1,7 +1,7 @@
 # 🚀 Tugas PAML - REST API Menggunakan Vania
 
 <div align="center">
-  <img src="https://avatars.githubusercontent.com/u/58877841?v=4" alt="profile" width="100" style="border-radius: 50%;">
+  <img src="https://avatars.githubusercontent.com/u/33880217?v=4" alt="profile" width="100" style="border-radius: 50%;">
   
   ### Muhamad Rico Aditya Prayoga
   #### 5210411055
