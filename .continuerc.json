@@ -1,11 +1,4 @@
 {
-  "docs": [
-    {
-      "title": "Vania Dart",
-      "startUrl": "https://vdart.dev/docs/category/the-basics",
-      "rootUrl": "https://vdart.dev/docs/category/the-basics"
-    }
-  ],
   "contextProviders": [
     {
       "name": "database",
